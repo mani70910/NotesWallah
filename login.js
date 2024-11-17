@@ -1,12 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js"; // Import from firebase-auth module
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js"; 
 
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCLwUH8pn8aAxDQqXGjeZVTlwKyokLTaXI",
@@ -22,18 +17,40 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Getting All the object of html
+// Getting all the object of HTML
 var email = document.getElementById("email");
 var password = document.getElementById("password");
 
+// Validate email format
+function isValidEmail(email) {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email);
+}
+
+// Toggle password visibility
+document.getElementById("eye").addEventListener("click", function() {
+    var passwordInput = document.getElementById("password");
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";  // Show password
+    } else {
+        passwordInput.type = "password";  // Hide password
+    }
+});
+
+// Login function
 window.login = function(e) {
     e.preventDefault();
     var emailValue = email.value;
     var passwordValue = password.value;
-    var errorMessage = document.getElementById("error-message"); // Get the error message element
+
+    // Validate email format
+    if (!isValidEmail(emailValue)) {
+        alert("Please enter a valid email address.");
+        return false;
+    }
 
     // Check if email and password are empty
-    if (emailValue == "" || passwordValue == "") {
+    if (emailValue === "" || passwordValue === "") {
         alert("Please fill in both email and password.");
         return false;
     } else if (passwordValue.length < 6) {
@@ -41,6 +58,7 @@ window.login = function(e) {
         return false;
     }
 
+    // Sign in with Firebase
     signInWithEmailAndPassword(auth, emailValue, passwordValue)
         .then((userCredential) => {
             const user = userCredential.user;
@@ -52,16 +70,23 @@ window.login = function(e) {
             }
         })
         .catch((error) => {
-            console.error("Login Error Code:", error.code);
-            console.error("Login Error Message:", error.message);
-            if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error("Login Error Code:", errorCode);
+            console.error("Login Error Message:", errorMessage);
+
+            // Show error message in the UI
+            document.getElementById("error-message").textContent = errorMessage;
+
+            if (errorCode === "auth/user-not-found" || errorCode === "auth/wrong-password") {
                 alert("Wrong email or password. Please try again.");
             } else {
-                alert(error.message);
+                alert("Error: " + errorMessage);
             }
         });
 }
 
+// Forgot password function
 window.forgotPassword = function() {
     var emailValue = document.getElementById("email").value;
     if (emailValue) {
