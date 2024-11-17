@@ -8,14 +8,13 @@ import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "htt
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-     apiKey: "AIzaSyA81vbeDhclxr3OiDOgtcamqJ3JPq7WzOQ",
-  authDomain: "notes-wallah-project.firebaseapp.com",
-  databaseURL: "https://notes-wallah-project-default-rtdb.firebaseio.com",
-  projectId: "notes-wallah-project",
-  storageBucket: "notes-wallah-project.firebasestorage.app",
-  messagingSenderId: "666851075166",
-  appId: "1:666851075166:web:b1fe9eb2a0825e52c5c0cf",
-  measurementId: "G-H40FPG7NPE"
+    apiKey: "AIzaSyCLwUH8pn8aAxDQqXGjeZVTlwKyokLTaXI",
+  authDomain: "notes-7cbac.firebaseapp.com",
+  projectId: "notes-7cbac",
+  storageBucket: "notes-7cbac.firebasestorage.app",
+  messagingSenderId: "721820600508",
+  appId: "1:721820600508:web:4f90bde22e5821cf61a8b9",
+  measurementId: "G-TBG0RTZWJP"
 };
 
 // Initialize Firebase
