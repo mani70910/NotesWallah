@@ -7,79 +7,70 @@ import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "htt
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCLwUH8pn8aAxDQqXGjeZVTlwKyokLTaXI",
-  authDomain: "notes-7cbac.firebaseapp.com",
-  projectId: "notes-7cbac",
-  storageBucket: "notes-7cbac.firebasestorage.app",
-  messagingSenderId: "721820600508",
-  appId: "1:721820600508:web:4f90bde22e5821cf61a8b9",
-  measurementId: "G-TBG0RTZWJP"
+    authDomain: "notes-7cbac.firebaseapp.com",
+    projectId: "notes-7cbac",
+    storageBucket: "notes-7cbac.firebasestorage.app",
+    messagingSenderId: "721820600508",
+    appId: "1:721820600508:web:4f90bde22e5821cf61a8b9",
+    measurementId: "G-TBG0RTZWJP"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
 
 // Getting All the object of html
-
-var email = document.getElementById("email")
-var password = document.getElementById("password")
+var email = document.getElementById("email");
+var password = document.getElementById("password");
 
 window.login = function(e) {
     e.preventDefault();
-    var email = document.getElementById("email");
-    var password = document.getElementById("password");
+    var emailValue = email.value;
+    var passwordValue = password.value;
     var errorMessage = document.getElementById("error-message"); // Get the error message element
-    var obj = {
-        email: email.value,
-        password: password.value
-    };
 
     // Check if email and password are empty
-
-    if (obj.email == null || obj.password == "") {
-        alert("please fill below details");
+    if (emailValue == "" || passwordValue == "") {
+        alert("Please fill in both email and password.");
         return false;
-    } else if (password.length < 6) {
+    } else if (passwordValue.length < 6) {
         alert("Password must be at least 6 characters long.");
         return false;
     }
 
-
-    signInWithEmailAndPassword(auth, obj.email, obj.password)
+    signInWithEmailAndPassword(auth, emailValue, passwordValue)
         .then((userCredential) => {
-            // User is signed in.
             const user = userCredential.user;
             if (user.emailVerified) {
                 console.log("Logged in: " + user.email);
-                // Redirect to homepage.html or perform other actions here.
-                window.location.href = "homepage.html";
+                window.location.href = "homepage.html"; // Redirect to homepage
             } else {
                 alert("Email not verified. Please check your email for verification.");
             }
         })
         .catch((error) => {
-            // Handle errors
-            const errorCode = error.code;
-            const errorMessage = error.message;
-
-            if (errorCode === "auth/user-not-found" || errorCode === "auth/wrong-password") {
-                alert("Wrong email and password combination. Please try again.");
+            console.error("Login Error Code:", error.code);
+            console.error("Login Error Message:", error.message);
+            if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
+                alert("Wrong email or password. Please try again.");
             } else {
-                alert(errorMessage);
+                alert(error.message);
             }
         });
 }
+
 window.forgotPassword = function() {
-    var email = document.getElementById("email").value;
-    if (email) {
-        sendPasswordResetEmail(auth, email)
+    var emailValue = document.getElementById("email").value;
+    if (emailValue) {
+        sendPasswordResetEmail(auth, emailValue)
             .then(() => {
-                alert("Password reset email sent. Please check your email.");
+                alert("Password reset email sent. Please check your inbox.");
             })
             .catch((error) => {
+                console.error("Error sending password reset email:", error.message);
                 alert("Error sending password reset email: " + error.message);
             });
     } else {
