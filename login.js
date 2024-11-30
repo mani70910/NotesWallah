@@ -1,8 +1,7 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js"; 
+// Import the functions you need from the Firebase SDK
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js"; 
 
-// Your web app's Firebase configuration
+// Initialize Firebase with your Firebase config
 const firebaseConfig = {
     apiKey: "AIzaSyACjk_6IpSuE30D2S0_kjTE6fdbQelY2Rs",
     authDomain: "noteswallah-3c7d5.firebaseapp.com",
@@ -11,15 +10,16 @@ const firebaseConfig = {
     messagingSenderId: "452106121683",
     appId: "1:452106121683:web:9ee83f0f8096d302967f26",
     measurementId: "G-KNZ16J7GMW"
-  };
+};
 
-// Initialize Firebase
+// Initialize Firebase app and get auth instance
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Getting all the object of HTML
-var email = document.getElementById("email");
-var password = document.getElementById("password");
+// Get references to the email, password, and error message DOM elements
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const errorMessageElement = document.getElementById("error-message");
 
 // Validate email format
 function isValidEmail(email) {
@@ -29,7 +29,6 @@ function isValidEmail(email) {
 
 // Toggle password visibility
 document.getElementById("eye").addEventListener("click", function() {
-    var passwordInput = document.getElementById("password");
     if (passwordInput.type === "password") {
         passwordInput.type = "text";  // Show password
     } else {
@@ -40,29 +39,32 @@ document.getElementById("eye").addEventListener("click", function() {
 // Login function
 window.login = function(e) {
     e.preventDefault();
-    var emailValue = email.value;
-    var passwordValue = password.value;
+
+    const emailValue = emailInput.value;
+    const passwordValue = passwordInput.value;
 
     // Validate email format
     if (!isValidEmail(emailValue)) {
         alert("Please enter a valid email address.");
-        return false;
+        return;
     }
 
-    // Check if email and password are empty
+    // Check if email and password are provided and password length
     if (emailValue === "" || passwordValue === "") {
         alert("Please fill in both email and password.");
-        return false;
-    } else if (passwordValue.length < 6) {
+        return;
+    }
+    if (passwordValue.length < 6) {
         alert("Password must be at least 6 characters long.");
-        return false;
+        return;
     }
 
-    // Sign in with Firebase
+    // Sign in with Firebase Authentication
     signInWithEmailAndPassword(auth, emailValue, passwordValue)
         .then((userCredential) => {
             const user = userCredential.user;
             if (user.emailVerified) {
+                // Redirect to homepage after successful login
                 console.log("Logged in: " + user.email);
                 window.location.href = "homepage.html"; // Redirect to homepage
             } else {
@@ -72,23 +74,26 @@ window.login = function(e) {
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
+
             console.error("Login Error Code:", errorCode);
             console.error("Login Error Message:", errorMessage);
 
-            // Show error message in the UI
-            document.getElementById("error-message").textContent = errorMessage;
+            // Display the error message to the user
+            errorMessageElement.textContent = errorMessage;
 
+            // Provide specific error feedback
             if (errorCode === "auth/user-not-found" || errorCode === "auth/wrong-password") {
                 alert("Wrong email or password. Please try again.");
             } else {
                 alert("Error: " + errorMessage);
             }
         });
-}
+};
 
 // Forgot password function
 window.forgotPassword = function() {
-    var emailValue = document.getElementById("email").value;
+    const emailValue = emailInput.value;
+
     if (emailValue) {
         sendPasswordResetEmail(auth, emailValue)
             .then(() => {
@@ -101,4 +106,4 @@ window.forgotPassword = function() {
     } else {
         alert("Please enter your email to reset the password.");
     }
-}
+};
