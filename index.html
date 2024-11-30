@@ -10,67 +10,58 @@
 
 <body>
     <div class="overlay">
-        <!-- LOGN IN FORM by Omar Dsoky -->
+        <!-- LOG IN FORM -->
         <form action="#" onsubmit="login(event)">
-            <!--   con = Container  for items in the form-->
+            <!--   Container for items in the form-->
             <div class="con">
-                <!--     Start  header Content  -->
+                <!-- Start header Content -->
                 <header class="head-form">
                     <h2>Log In</h2>
-                    <!--     A welcome message or an explanation of the login form -->
-                    <p>login here using your username and password</p>
+                    <!-- A welcome message or an explanation of the login form -->
+                    <p>Login here using your username and password</p>
                 </header>
-                <!--     End  header Content  -->
+                <!-- End header Content -->
                 <br>
                 <div class="field-set">
 
-                    <!--   user name -->
+                    <!-- Username -->
                     <span class="input-item">
-                   <i class="fa fa-user-circle"></i>
-                 </span>
-                    <!--   user name Input-->
-                    <input class="form-input" type="text" name="email" id="email" autocomplete="email">
-
+                        <i class="fa fa-user-circle"></i>
+                    </span>
+                    <!-- Username Input -->
+                    <input class="form-input" type="email" name="email" id="email" autocomplete="email" required>
 
                     <br>
 
-                    <!--   Password -->
-
+                    <!-- Password -->
                     <span class="input-item">
-                <i class="fa fa-key"></i>
-               </span>
-                    <!--   Password Input-->
-                    <input class="form-input" type="password" name="password" id="password" autocomplete="current-password">
+                        <i class="fa fa-key"></i>
+                    </span>
+                    <!-- Password Input -->
+                    <input class="form-input" type="password" name="password" id="password" autocomplete="current-password" required>
 
-
-                    <!--      Show/hide password  -->
+                    <!-- Show/Hide Password -->
                     <span>
-                <i class="fa fa-eye" aria-hidden="true"  type="button" id="eye"></i>
-             </span>
-
+                        <i class="fa fa-eye" aria-hidden="true" id="eye"></i>
+                    </span>
 
                     <br>
-                    <!--        buttons -->
-                    <!--      button LogIn -->
-                    <button class="log-in"> Log In </button>
+                    <!-- Log In Button -->
+                    <button type="button" class="log-in" onclick="login(event)"> Log In </button>
                 </div>
 
-                <!--   other buttons -->
+                <!-- Other buttons -->
                 <div class="other">
-                    <!--      Forgot Password button-->
-                    <p> <a href="javascript:void(0);" onclick="forgotPassword()">Forgot Password?</a></p>
-                    <p>Don't have an account?<a href="signup.html">Sign Up</a></p>
-
+                    <!-- Forgot Password button -->
+                    <p><a href="javascript:void(0);" onclick="forgotPassword()">Forgot Password?</a></p>
+                    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
                 </div>
 
-                <!--   End Conrainer  -->
             </div>
-
-            <!-- End Form -->
         </form>
     </div>
 
+    <script src="/login.js" type="module"></script>
 </body>
-<script src="/login.js" type="module"></script>
 
 </html>
