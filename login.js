@@ -64,7 +64,7 @@ window.login = function(e) {
             const user = userCredential.user;
             if (user.emailVerified) {
                 console.log("Logged in: " + user.email);
-                window.location.href = "homepage.html"; // Redirect to homepage
+                window.location.href = "/homepage.html"; // Redirect to homepage
             } else {
                 alert("Email not verified. Please check your email for verification.");
             }
