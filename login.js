@@ -4,14 +4,14 @@ import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "htt
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyCLwUH8pn8aAxDQqXGjeZVTlwKyokLTaXI",
-    authDomain: "notes-7cbac.firebaseapp.com",
-    projectId: "notes-7cbac",
-    storageBucket: "notes-7cbac.firebasestorage.app",
-    messagingSenderId: "721820600508",
-    appId: "1:721820600508:web:4f90bde22e5821cf61a8b9",
-    measurementId: "G-TBG0RTZWJP"
-};
+    apiKey: "AIzaSyACjk_6IpSuE30D2S0_kjTE6fdbQelY2Rs",
+    authDomain: "noteswallah-3c7d5.firebaseapp.com",
+    projectId: "noteswallah-3c7d5",
+    storageBucket: "noteswallah-3c7d5.firebasestorage.app",
+    messagingSenderId: "452106121683",
+    appId: "1:452106121683:web:9ee83f0f8096d302967f26",
+    measurementId: "G-KNZ16J7GMW"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
